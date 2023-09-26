@@ -1,0 +1,2 @@
+"0","hist(city_mpg, main= ""Histogram for City mpg"",xlab= ""city_mpg"", ylab= ""Frequency"", col= ""pink"",border= ""black"")"
+"0",""

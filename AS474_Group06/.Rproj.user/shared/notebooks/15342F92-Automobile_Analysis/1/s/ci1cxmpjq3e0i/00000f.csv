@@ -1,0 +1,3 @@
+"0",""
+"0","plot(autoMobile$stroke, autoMobile$price, main = ""Stroke vs Price"","
+"0","     xlab = ""Stroke"", ylab = ""Price"", col = ""red"")"

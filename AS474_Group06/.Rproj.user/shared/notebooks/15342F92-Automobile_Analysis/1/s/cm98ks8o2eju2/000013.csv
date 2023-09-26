@@ -1,0 +1,1 @@
+"0","boxplot(compression_ratio, main= ""Boxplot for price"", xlab= ""price"", col= ""magenta"", horizontal = TRUE)"

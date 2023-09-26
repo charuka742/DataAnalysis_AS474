@@ -1,0 +1,1 @@
+"0","boxplot(norm_loss, main= ""Boxplot for price"", xlab= ""price"", col= ""purple"", horizontal = TRUE)"

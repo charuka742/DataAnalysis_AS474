@@ -1,0 +1,4 @@
+"0","Make_Tbl <- table(autoMobile$make)"
+"0",""
+"0","barplot(Make_Tbl, main = ""Vehicle Make"", xlab = ""Brand"", ylab = ""Count"", col = terrain.colors(21), border = ""black"")"
+"0",""

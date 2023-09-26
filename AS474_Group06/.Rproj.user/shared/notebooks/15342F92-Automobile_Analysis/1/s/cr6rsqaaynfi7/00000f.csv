@@ -1,0 +1,3 @@
+"0",""
+"0","plot(autoMobile$engine_size, autoMobile$price, main = ""Engine Size vs Price"", "
+"0","     xlab = ""Engine Size"", ylab = ""Price"", col = ""red"")"

@@ -1,0 +1,2 @@
+"0","boxplot(bore_num, main= ""Boxplot for price"", xlab= ""price"", col= ""cyan"", horizontal = TRUE)"
+"0",""

@@ -1,0 +1,4 @@
+"0",""
+"0","autoMobile[autoMobile == '?'] <- NA"
+"0",""
+"0","head(autoMobile)"

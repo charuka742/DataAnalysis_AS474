@@ -1,0 +1,3 @@
+"0",""
+"0","plot(autoMobile$highway_mpg, autoMobile$price, main = "" Highway MPG vs Price"","
+"0","     xlab = ""Highway MPG"", ylab = ""Price"", col = ""purple"")"

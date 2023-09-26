@@ -1,0 +1,5 @@
+"0","# Build a new linear regression model with the log-transformed response variable"
+"0","lm_trans <- lm(transformed_response$price ~ peak_rpm + engine_size + curb_weight + engine_location + width + engine_location, data = autoMobile)"
+"2","Error in transformed_response$price : 
+  $ operator is invalid for atomic vectors
+"

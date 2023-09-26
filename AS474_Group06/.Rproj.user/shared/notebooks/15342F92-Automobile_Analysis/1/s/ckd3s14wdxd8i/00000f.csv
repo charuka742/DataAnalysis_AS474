@@ -1,0 +1,7 @@
+"0",""
+"0","# Subset the relevant columns for correlation calculation"
+"0","correlation_matrix <- cor(autoMobile[, c(1, 2, 10, 11, 12, 13, 14, 17,"
+"0","                                         19, 20, 21, 22, 23, 24, 25, 26)])"
+"0",""
+"0","# Create the correlation color plot"
+"0","corrplot(correlation_matrix, method = ""color"")"

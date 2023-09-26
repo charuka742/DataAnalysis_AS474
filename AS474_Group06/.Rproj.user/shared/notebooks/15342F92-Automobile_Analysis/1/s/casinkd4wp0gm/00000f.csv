@@ -1,0 +1,4 @@
+"0",""
+"0","price_num <-as.numeric(autoMobile$price)"
+"0","hist(price_num, main= ""Histogram for price"",xlab= ""price"", ylab= ""Frequency"", col= ""gold"",border= ""black"")"
+"0",""

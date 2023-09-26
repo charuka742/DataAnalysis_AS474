@@ -1,0 +1,2 @@
+"0","par(mfrow = c(2,2))"
+"0","boxplot(stroke_num, main= ""Boxplot for price"", xlab= ""price"", col= ""pink"", horizontal = TRUE)"

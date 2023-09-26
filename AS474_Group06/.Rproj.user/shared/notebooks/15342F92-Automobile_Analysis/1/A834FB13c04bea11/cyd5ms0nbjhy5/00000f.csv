@@ -1,0 +1,6 @@
+"0","CorEngineS.P <- cor(autoMobile$engine_size, autoMobile$price)"
+"0","CorEngineS.P"
+"1","[1]"
+"1"," 0.8414956"
+"1","
+"

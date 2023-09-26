@@ -1,0 +1,2 @@
+"0","fuel_system_Tbl <- table(autoMobile$fuel_system)"
+"0","barplot(fuel_system_Tbl, main = ""Fuel System"", xlab = ""system"", ylab = ""Count"", col = rainbow(7),  border = ""black"")"

@@ -1,0 +1,1 @@
+"0","boxplot(curb_weight, main= ""Boxplot for price"", xlab= ""price"", col= ""green"", horizontal = TRUE)"

@@ -1,0 +1,1288 @@
+---
+title: "AS474_Automobile_Analysis"
+author: "Group06"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### Import the libraries
+
+```{r}
+
+library(tidyverse)
+
+library(dplyr)
+library(moments)
+library(repr)
+library(corrplot)
+library(dplyr)
+library(purrr)
+library(car)
+
+```
+
+```{r}
+
+```
+
+#### Loading the data set
+
+```{r}
+
+colNames <- c("symboling",
+               "normalized_losses",
+               "make",
+               "fuel_type",
+               "aspiration",
+               "num_of_doors",
+              "body_style",
+               "drive_wheels",
+               "engine_location",
+               "wheel_base",
+               "length",
+               "width",
+               "height",
+               "curb_weight",
+               "engine_type",
+               "num_of_cylinders",
+               "engine_size",
+               "fuel_system",
+              "bore",
+               "stroke",
+               "compression_ratio",
+               "horsepower",
+               "peak_rpm",
+               "city_mpg",
+               "highway_mpg",
+               "price")
+
+
+
+
+autoMobile <- read.csv("../Data/Automobile_data.csv", header = TRUE, col.names = colNames)
+
+
+attach(autoMobile)
+
+```
+
+#### Displaying the first 6 rows of data
+
+```{r}
+head(autoMobile)
+```
+
+#### Steps for working with missing data:
+
+1.  Identify missing data
+
+2.  Deal with missing data
+
+3.  Correct data format
+
+#### Identify Missing Value
+
+-   Convert "?" to NA In the data set missing data comes with the question mark "?". We replace it with NA.
+
+```{r}
+
+autoMobile[autoMobile == '?'] <- NA
+
+head(autoMobile)
+
+```
+
+#### Getting a description about the dataset
+
+```{r}
+
+glimpse(autoMobile)
+
+
+```
+
+```{r}
+sum(is.na(autoMobile))
+```
+
+#### Check the missing values in each column
+
+```{r}
+
+NAsByFeature <- apply(autoMobile, 2, 
+                      function(x){ 
+                        length(which(is.na(x)))
+                        }
+                      )
+
+NAsByFeature
+
+```
+
+**Each column has 205 rows of data and 7 columns containing missing data:**
+
+1.  normalized_losses: 41 NA
+
+2.  num_of_doors: 2 NA
+
+3.  bore: 4 NA
+
+4.  stroke: 4 NA
+
+5.  horsepower: 2 NA
+
+6.  peak_rpm: 2 NA
+
+7.  price: 4 NA
+
+**Deal with missing data**
+
+1.  **Drop data**
+
+    a.drop the whole row
+
+    b.drop the whole column
+
+2.  **Replace data**
+
+    a.replace it by mean
+
+    b.replace it by frequency
+
+    c.replace it based on other functions
+
+-   Whole columns should be dropped only if most entries in the column are empty. In our dataset, none of the columns are empty enough to drop entirely.
+
+-   "normalized-losses": 41 missing data, replace them with mean.
+
+-   For other missing values we remove the rows which contain missing values
+
+**View the structure of the data set**
+
+```{r}
+# Calculate the average of normalized-losses
+avg_norm_loss <- mean(as.numeric(autoMobile[["normalized_losses"]]), na.rm = TRUE)
+
+# Print the average of normalized-losses
+cat("Average of normalized-losses:", avg_norm_loss, "\n")
+
+# Replace missing values in normalized-losses with the average
+autoMobile[["normalized_losses"]][is.na(autoMobile[["normalized_losses"]])] <- avg_norm_loss
+
+head(autoMobile,10)
+
+```
+
+```{r}
+sum(duplicated(autoMobile))
+
+
+
+```
+
+```{r}
+glimpse(autoMobile)
+```
+
+**Remove the na vaulues**
+
+```{r}
+
+autoMobile <- autoMobile %>%
+  na.omit()
+
+NAsByFeature <- sapply(autoMobile, function(x) sum(is.na(x)))
+
+NAsByFeature
+
+```
+
+-   Now we can see that data set is cleaned from missing values.
+
+-   Now we should check the data types for each column.
+
+```{r}
+
+glimpse(autoMobile)
+
+```
+
+-   Change the variable types for specific columns Some columns are not of the correct data type. We have to convert data types into a proper format for each column.
+
+```{r}
+factorCols = c('make',
+               'fuel_type',
+               'aspiration',
+               'num_of_doors',
+               'body_style',
+               'drive_wheels',
+               'engine_location',
+               'engine_type',
+               'num_of_cylinders',
+               'fuel_system'
+               )
+
+intCols =c('horsepower',
+           'symboling',
+           'normalized_losses',
+           'curb_weight',
+           'engine_size',
+           'city_mpg',
+           'highway_mpg'
+           )
+
+numCols = c('bore',
+            'stroke',
+            'compression_ratio',
+            'peak_rpm',
+            'price',
+            'wheel_base',
+            'length',
+            'width',
+            'height')
+
+
+autoMobile <- autoMobile %>% 
+  mutate_at(factorCols, as.factor) %>% 
+  mutate_at(intCols, as.integer) %>% 
+  mutate_at(numCols, as.numeric)
+
+
+```
+
+```{r}
+
+str(autoMobile)
+
+```
+
+-   Checking whether there is any duplicate value.
+
+```{r}
+#dealing with the duplicate data
+sum(duplicated(autoMobile))
+
+
+```
+
+-   Finally the cleaned data set is obtained with no missing values and all data in its proper format.
+
+```{r}
+horsepowerTable <- table(autoMobile[['horsepower']])
+
+
+hist(autoMobile$horsepower, col = topo.colors(length(horsepowerTable)), border = "black",
+     xlab = "Horsepower", ylab = "Count", main = "Histogram of HORSEPOWER")
+
+```
+
+## **Explantory Data Analysis**
+
+-   When visualizing individual variables, it is important to first understand what type of variable you are dealing with.This helps to find the right visualization method for that variable.
+
+```{r}
+str(autoMobile)
+```
+
+-   summary of the dataset
+
+```{r}
+summary(autoMobile)
+```
+
+#### Continuous Numerical Variables
+
+-   Continuous numerical variables are variables that may contain any value within some range. Continuous numerical variables can have the type "num".
+
+-   In order to start understanding the (linear) relationship between an individual variable and the price. This can be done by using the scatterplot plus the fitted regression line for the data.
+
+```{r}
+hist(symboling,main= "Histogram for symboling",xlab= "Symboling",ylab= "Frequency", col= "gold",border= "black")
+
+```
+
+```{r}
+norm_loss <- as.numeric(normalized_losses)
+
+hist(norm_loss, main= "Histogram for normalized_losses",xlab= "Normalized Losses",xlim = c(40,275), ylab= "Frequency", col= "green",border= "black")
+```
+
+```{r}
+hist(wheel_base, main= "Histogram for wheel_base",xlab= "wheel base", ylab= "Frequency", col= "skyblue",border= "black")
+
+```
+
+```{r}
+hist(curb_weight,main= "Histogram for curb_weight",xlab= "Curb Weight", ylab= "Frequency", col= rainbow(1),border= "black")
+
+```
+
+```{r}
+hist(length, main= "Histogram for length",xlab= "length", ylab= "Frequency", col= "seagreen",border= "black")
+
+```
+
+```{r}
+hist(width, main= "Histogram for width",xlab= "width", ylab= "Frequency", col= "red",border= "black")
+
+```
+
+```{r}
+hist(height, main= "Histogram for width",xlab= "width", ylab= "Frequency", col= "orange",border= "black")
+```
+
+```{r}
+hist(engine_size, main= "Histogram for Engine Size",xlab= "width", ylab= "Frequency", col= "orange",border= "black")
+
+```
+
+```{r}
+bore_num <- as.numeric(autoMobile$bore)
+hist(bore_num, main= "Histogram for Bore",xlab= "bore", ylab= "Frequency", col= "blue",border= "black")
+
+
+```
+
+```{r}
+stroke_num <- as.numeric(autoMobile$stroke)
+hist(stroke_num, main= "Histogram for stroke",xlab= "stroke", ylab= "Frequency", col= "green",border= "black")
+
+```
+
+```{r}
+hist(compression_ratio, main= "Histogram for Compression Ratio",xlab= "compression_ratio", ylab= "Frequency",xlim = c(0, 30), col= "red",border= "black")
+
+```
+
+```{r}
+horsepower_num <- as.numeric(autoMobile$horsepower)
+hist(horsepower_num, main= "Histogram for Horsepower",xlab= "horsepower", ylab= "Frequency", col= "purple",border= "black")
+
+```
+
+```{r}
+peak_rpm_num <- as.numeric(autoMobile$peak_rpm)
+hist(peak_rpm_num, main= "Histogram for Peak Rpm",xlab= "peak_rpm", ylab= "Frequency", col= "yellow",border= "black")
+
+```
+
+```{r}
+hist(city_mpg, main= "Histogram for City mpg",xlab= "city_mpg", ylab= "Frequency", col= "pink",border= "black")
+
+```
+
+```{r}
+hist(highway_mpg, main= "Histogram for highway_mpg",xlab= "highway_mpg", ylab= "Frequency", col= "brown",border= "black")
+
+```
+
+```{r}
+
+price_num <-as.numeric(autoMobile$price)
+hist(price_num, main= "Histogram for price",xlab= "price", ylab= "Frequency", col= "gold",border= "black")
+
+```
+
+```{r}
+skewness_automobile = c(skewness(autoMobile$highway_mpg),
+                skewness(autoMobile$city_mpg),
+                skewness(autoMobile$price),
+                skewness(autoMobile$peak_rpm),
+                skewness(autoMobile$horsepower),
+                skewness(autoMobile$compression_ratio),
+                skewness(autoMobile$bore),
+                skewness(autoMobile$stroke),
+                skewness(autoMobile$engine_size),
+                skewness(autoMobile$height),
+                skewness(autoMobile$width),
+                skewness(autoMobile$length),
+                skewness(autoMobile$wheel_base),
+                skewness(autoMobile$curb_weight)
+                
+              )
+
+skew.Names <- c("highway_mpg", "city_mpg" , "price", "peak_rpm", "horsepower",
+                "compression_ratio","bore","stroke","engine_size",
+                "height","width","length","wheel_base","curb_weight")
+
+skewnessDF <- data.frame(skew.Names, skewness_automobile)
+skewnessDF
+
+
+```
+
+BOX PLOTS
+
+```{r}
+ 
+par(mfrow = c(2,2))
+
+boxplot(symboling, main= "Boxplot for symboling", xlab= "symboling", col= "darkcyan", horizontal = TRUE)
+
+boxplot(highway_mpg, main= "Boxplot for hmpg", xlab= "hmpg", col= "darkorange", horizontal = TRUE)
+
+boxplot(city_mpg, main= "Boxplot for price", xlab= "price", col= "darkred", horizontal = TRUE)
+
+boxplot(price_num, main= "Boxplot for price", xlab= "price", col= "darkblue", horizontal = TRUE)
+
+
+```
+
+```{r}
+par(mfrow = c(2,2))
+boxplot(peak_rpm_num, main= "Boxplot for price", xlab= "price", col= "darkgreen", horizontal = TRUE)
+boxplot(horsepower_num, main= "Boxplot for price", xlab= "price", col= "gray", horizontal = TRUE)
+boxplot(compression_ratio, main= "Boxplot for price", xlab= "price", col= "magenta", horizontal = TRUE)
+boxplot(bore_num, main= "Boxplot for price", xlab= "price", col= "cyan", horizontal = TRUE)
+
+```
+
+```{r}
+par(mfrow = c(2,2))
+boxplot(stroke_num, main= "Boxplot for price", xlab= "price", col= "pink", horizontal = TRUE)
+boxplot(engine_size, main= "Boxplot for price", xlab= "price", col= "brown", horizontal = TRUE)
+boxplot(height, main= "Boxplot for price", xlab= "price", col= "yellow", horizontal = TRUE)
+boxplot(width, main= "Boxplot for price", xlab= "price", col= "orange", horizontal = TRUE)
+
+```
+
+```{r}
+par(mfrow = c(2,2))
+boxplot(length, main= "Boxplot for price", xlab= "price", col= "blue", horizontal = TRUE)
+boxplot(curb_weight, main= "Boxplot for price", xlab= "price", col= "green", horizontal = TRUE)
+boxplot(wheel_base, main= "Boxplot for price", xlab= "price", col= "red", horizontal = TRUE)
+boxplot(norm_loss, main= "Boxplot for price", xlab= "price", col= "purple", horizontal = TRUE)
+
+
+```
+
+BAR PLOT
+
+```{r}
+Make_Tbl <- table(autoMobile$make)
+
+
+barplot(Make_Tbl, main = "Vehicle Make", xlab = "Brand", ylab = "Count", col = terrain.colors(21), border = "black")
+
+```
+
+-   maximum number of Vehicals are Toyota and the minimum is mercury
+
+```{r}
+fuel_type_Tbl <- table(autoMobile$fuel_type)
+barplot(fuel_type_Tbl, main = "Fuel Type", xlab = "type", ylab = "Count", col = cm.colors(2),  border = "black")
+
+```
+
+-   Mostly used fuel type is gas
+
+```{r}
+aspiration_Tbl <- table(autoMobile$aspiration)
+barplot(aspiration_Tbl, main = "Aspiration", xlab = "type", ylab = "Count",col = cm.colors(2),  border = "black")
+
+```
+
+-   most of them are Standard vehicles
+
+```{r}
+num_of_doors_Tbl <- table(autoMobile$num_of_doors)
+barplot(num_of_doors_Tbl, main = "Number Of Doors", xlab = "No_Of_Doors", ylab = "Count", col = heat.colors(2), border = "black")
+
+```
+
+-   four doors vehicles are Higher than two no of door vehicles
+
+```{r}
+body_style_Tbl <- table(autoMobile$body_style)
+barplot(body_style_Tbl, main = "Body Style", xlab = "style", ylab = "Count",col = terrain.colors(5), border = "black")
+
+```
+
+-   sedan is the popular vehicle body style
+
+```{r}
+drive_wheels_Tbl <- table(autoMobile$drive_wheels)
+barplot(drive_wheels_Tbl, main = "Drive Wheels", xlab = "Type", ylab = "Count",col = rainbow(3), border = "black")
+
+```
+
+-   most of drive wheels are fwd
+
+```{r}
+engine_location_Tbl <- table(autoMobile$engine_location)
+barplot(engine_location_Tbl, main = "Engine Location", xlab = "Location", ylab = "Count",col = rainbow(2),  border = "black")
+
+```
+
+-   almost all the vehicle's engine is located in the front
+
+```{r}
+engine_type_Tbl <- table(autoMobile$engine_type)
+barplot(engine_type_Tbl, main = "Engine Type", xlab = "Type", ylab = "Count", col = rainbow(6), border = "black")
+
+```
+
+-   most popular engine type is ohc
+
+```{r}
+num_of_cylinders_Tbl <- table(autoMobile$num_of_cylinders)
+barplot(num_of_cylinders_Tbl, main = "Number Of Cylinders", xlab = "Cylinders", ylab = "Count",col = rainbow(6), border = "black")
+
+```
+
+-   many vehicles has four cyclinders
+
+```{r}
+fuel_system_Tbl <- table(autoMobile$fuel_system)
+barplot(fuel_system_Tbl, main = "Fuel System", xlab = "system", ylab = "Count", col = rainbow(7),  border = "black")
+
+
+
+```
+
+-   most popular fuel system is mpfi
+
+#### Engine_size vs Price
+
+```{r}
+
+plot(autoMobile$engine_size, autoMobile$price, main = "Engine Size vs Price", 
+     xlab = "Engine Size", ylab = "Price", col = "red")
+
+lm_fit <- lm(price ~ engine_size, data = autoMobile)
+
+abline(lm_fit, col = "blue")
+
+```
+
+-   As the engine-size goes up, the price goes up: this indicates a positive direct correlation between these two variables.
+
+-   Engine size seems like a pretty good predictor of price since the regression line is almost a perfect diagonal line.
+
+```{r}
+CorEngineS.P <- cor(autoMobile$engine_size, autoMobile$price)
+CorEngineS.P
+```
+
+-   We can examine the correlation between 'engine-size' and 'price' and see it's approximately: 0.8887785
+
+#### Highway_mpg vs Price
+
+```{r}
+
+plot(autoMobile$highway_mpg, autoMobile$price, main = " Highway MPG vs Price",
+     xlab = "Highway MPG", ylab = "Price", col = "purple")
+
+lm_fit <- lm(price ~ highway_mpg, data = autoMobile)
+abline(lm_fit, col = "red")
+
+```
+
+-   As the highway-mpg goes up, the price goes down: this indicates an inverse/negative relationship between these two variables.
+
+-   Highway mpg could potentially be a predictor of price.
+
+```{r}
+CorHighway_mpg.P <- cor(autoMobile$highway_mpg, autoMobile$price)
+CorHighway_mpg.P
+```
+
+-   we can examine the correlation between 'highway_mpg' and 'price' and see it's approximately: **-0.7200901**
+
+#### Peak_rpm vs Price
+
+```{r}
+plot(autoMobile$peak_rpm, autoMobile$price, main = "PEAK RPM vs Price",
+     xlab = "PEAK RPM", ylab = "Price", col = "red")
+
+lm_fit <- lm(price ~ peak_rpm, data = autoMobile)
+abline(lm_fit, col = "blue")
+```
+
+-   Peak rpm does not seem like a good predictor of the price at all since the regression line is close to horizontal. Also, the data points are very scattered and far from the fitted line, showing lots of variability. Therefore it's it is not a reliable variable.
+
+```{r}
+CorPeak_rpm.P <- cor(autoMobile$peak_rpm, autoMobile$price)
+CorPeak_rpm.P
+```
+
+-   We can examine the correlation between 'peak-rpm' and 'price' and see it's approximately: **-0.1719161**
+
+#### Stroke vs Price
+
+```{r}
+
+plot(autoMobile$stroke, autoMobile$price, main = "Stroke vs Price",
+     xlab = "Stroke", ylab = "Price", col = "red")
+
+lm_fit <- lm(price ~ stroke, data = autoMobile)
+abline(lm_fit, col = "blue")
+```
+
+```{r}
+
+CorStroke.P <- cor(autoMobile$stroke, autoMobile$price)
+CorStroke.P
+
+```
+
+-   We can examine the correlation between 'stroke' and 'price' and see it's approximately: **0.09600668**
+
+#### **Categorical Variables**
+
+-   These are variables that describe a 'characteristic' of a data unit, and are selected from a small group of categories. The categorical variables can have the type "char" or "fact".
+
+-   A good way to visualize categorical variables is by using box plots.
+
+1.  Relationship between **"body-style"** and **"price"**
+
+```{r}
+
+boxplot(price ~ body_style, data = autoMobile, col = rainbow(5),
+        main = "Boxplot: Body Style vs Price",
+        xlab = "Body Style", ylab = "Price")
+
+```
+
+-   We see that the distributions of price between the different body-style categories have a significant overlap, and so body-style would not be a good predictor of price.
+
+2.  Relationship between **"engine-location"** and **"price"**
+
+```{r}
+
+boxplot(price ~ engine_location, data = autoMobile, col = cm.colors(1),
+        main = "Boxplot: Engine Location vs Price",
+        xlab = "Engine Location", ylab = "Price")
+
+```
+
+-   Here we see that the distribution of price between these two engine-location categories, front and rear, are distinct enough to take engine-location as a potential good predictor of price.
+
+3.Relationship between **"drive-wheels"** and **"price"**.
+
+```{r}
+boxplot(price ~ drive_wheels, data = autoMobile, col = terrain.colors(3),
+        main = "Boxplot: Drive Wheels vs Price",
+        xlab = "Drive Wheels", ylab = "Price")
+```
+
+-   Here we see that the distribution of price between the different drive-wheels categories differs; as such drive-wheels could potentially be a predictor of price.
+
+#### Descriptive Statistical Analysis
+
+1.  The summary function automatically computes basic statistics for all continuous variables. Any NA values are automatically skipped in these statistics.
+
+This will show:
+
+1.  The count of that variable
+
+2.  The mean
+
+3.  The standard deviation (std)
+
+4.  The minimum value
+
+5.  The IQR (Interquartile Range: 25%, 50% and 75%)
+
+6.  The maximum value
+
+```{r}
+summary(autoMobile)
+```
+
+-   To get a better measure of the important characteristics, we look at the correlation of these variables with the car price, in other words: how is the car price dependent on this variable?
+
+```{r}
+df_01 <- autoMobile[, c(1, 2, 10, 11, 12, 13, 14, 17,  26)]
+df_02 <- autoMobile[, c(19, 20, 21, 22, 23, 24, 25, 26)]
+
+par(mfrow = c(1,2))
+
+pairs(df_01)
+pairs(df_02)
+
+```
+
+### Correlation
+
+-   **Correlation:** a measure of the extent of interdependence between variables.
+
+#### Pearson Correlation
+
+-   The Pearson Correlation measures the linear dependence between two variables X and Y.
+
+-   The resulting coefficient is a value between -1 and 1 inclusive, where:
+
+    a\. Total positive linear correlation.
+
+    b\. No linear correlation, the two variables most likely do not affect each other.
+
+    c\. Total negative linear correlation.
+
+-   Calculate the correlation between variables of type "int" or "num" using the method "cor":
+
+```{r}
+
+# Subset the relevant columns for correlation calculation
+correlation_matrix <- cor(autoMobile[, c(1, 2, 10, 11, 12, 13, 14, 17,
+                                         19, 20, 21, 22, 23, 24, 25, 26)])
+
+# Create the correlation color plot
+corrplot(correlation_matrix, method = "color")
+```
+
+We can use the stats of this corr table data for creating a model.
+
+-   Sometimes we would like to know the significant of the correlation estimate.
+
+#### **P-value**
+
+-   What is this P-value?
+
+    The P-value is the probability value that the correlation between the two variables is statistically significant. Normally, we choose a significance level of 0.05, which means that we are 95% confident that the correlation between the variables is significant.
+
+-   By convention, when the
+
+    a\. p-value is \< 0.001: We say there is strong evidence that the correlation is significant.
+
+    b\. the p-value is \< 0.05: There is moderate evidence that the correlation is significant.
+
+    c\. the p-value is \< 0.1: There is weak evidence that the correlation is significant.
+
+    d\. the p-value is \< 0.1: There is no evidence that the correlation is significant.
+
+**1.Wheel_base vs Price**
+
+```{r}
+# Calculate the Pearson correlation coefficient and p-value
+result_wb <- cor.test(autoMobile$wheel_base, autoMobile$price, method = "pearson")
+
+# Extract the correlation coefficient and p-value
+pearson_coef_wb <- result_wb$estimate
+p_value_wb <- result_wb$p.value
+
+# Print the results
+print(paste("The Pearson Correlation Coefficient is", pearson_coef_wb, "with a P-value of P =", p_value_wb))
+
+```
+
+**Conclusion:**
+
+-   Since the p-value is \< 0.001, the correlation between wheel-base and price is statistically significant, although the linear relationship isn't extremely strong **(\~ 0.585)**
+
+**2.Horsepower vs Price**
+
+```{r}
+# Calculate the Pearson correlation coefficient and p-value
+result_hp <- cor.test(autoMobile$horsepower, autoMobile$price, method = "pearson")
+
+# Extract the correlation coefficient and p-value
+pearson_coef_hp <- result_hp$estimate
+p_value_hp <- result_hp$p.value
+
+# Print the results
+print(paste("The Pearson Correlation Coefficient is", pearson_coef_hp, "with a P-value of P =", p_value_hp))
+
+```
+
+**Conclusion:**
+
+-   Since the p-value is \< 0.001, the correlation between horsepower and price is statistically significant, and the linear relationship is quite strong (\~0.809, close to 1)
+
+**3.Lenght vs Price**
+
+```{r}
+# Calculate the Pearson correlation coefficient and p-value
+result_L <- cor.test(autoMobile$length, autoMobile$price, method = "pearson")
+
+# Extract the correlation coefficient and p-value
+pearson_coef_L <- result_L$estimate
+p_value_L <- result_L$p.value
+
+# Print the results
+print(paste("The Pearson Correlation Coefficient is", pearson_coef_L, "with a P-value of P =", p_value_L))
+
+```
+
+**Conclusion:**
+
+-   Since the p-value is \< 0.001, the correlation between length and price is statistically significant, and the linear relationship is moderately strong (\~0.691).
+
+**4.Width vs Price**
+
+```{r}
+# Calculate the Pearson correlation coefficient and p-value
+result_w <- cor.test(autoMobile$width, autoMobile$price, method = "pearson")
+
+# Extract the correlation coefficient and p-value
+pearson_coef_w <- result_w$estimate
+p_value_w <- result_w$p.value
+
+# Print the results
+print(paste("The Pearson Correlation Coefficient is", pearson_coef_w, "with a P-value of P =", p_value_w))
+
+```
+
+**Conclusion:**
+
+-   Since the p-value is \< 0.001, the correlation between width and price is statistically significant, and the linear relationship is quite strong (\~0.751).
+
+**5.Curb_weight vs Price**
+
+```{r}
+# Calculate the Pearson correlation coefficient and p-value
+result_cw <- cor.test(autoMobile$curb_weight, autoMobile$price, method = "pearson")
+
+# Extract the correlation coefficient and p-value
+pearson_coef_cw <- result_cw$estimate
+p_value_cw <- result_cw$p.value
+
+# Print the results
+print(paste("The Pearson Correlation Coefficient is", pearson_coef_cw, "with a P-value of P =", p_value_cw))
+
+```
+
+**Conclusion:**
+
+-   Since the p-value is \< 0.001, the correlation between curb-weight and price is statistically significant, and the linear relationship is quite strong (\~0.834).
+
+**6.Engine_size vs Price**
+
+```{r}
+# Calculate the Pearson correlation coefficient and p-value
+result_Es <- cor.test(autoMobile$engine_size, autoMobile$price, method = "pearson")
+
+# Extract the correlation coefficient and p-value
+pearson_coef_Es <- result_Es$estimate
+p_value_Es <- result_Es$p.value
+
+# Print the results
+print(paste("The Pearson Correlation Coefficient is", pearson_coef_Es, "with a P-value of P =", p_value_Es))
+
+```
+
+**Conclusion:**
+
+-   Since the p-value is \< 0.001, the correlation between engine-size and price is statistically significant, and the linear relationship is very strong (\~0.872).
+
+**7.Bore vs Price**
+
+```{r}
+# Calculate the Pearson correlation coefficient and p-value
+result_B <- cor.test(autoMobile$bore, autoMobile$price, method = "pearson")
+
+# Extract the correlation coefficient and p-value
+pearson_coef_B <- result_B$estimate
+p_value_B <- result_B$p.value
+
+# Print the results
+print(paste("The Pearson Correlation Coefficient is", pearson_coef_B, "with a P-value of P =", p_value_B))
+
+```
+
+**Conclusion:**
+
+-   Since the p-value is \< 0.001, the correlation between bore and price is statistically significant, but the linear relationship is only moderate (\~0.521).
+
+**8.City_mpg vs Price**
+
+```{r}
+# Calculate the Pearson correlation coefficient and p-value
+result_Cm <- cor.test(autoMobile$city_mpg, autoMobile$price, method = "pearson")
+
+# Extract the correlation coefficient and p-value
+pearson_coef_Cm <- result_Cm$estimate
+p_value_Cm <- result_Cm$p.value
+
+# Print the results
+print(paste("The Pearson Correlation Coefficient is", pearson_coef_Cm, "with a P-value of P =", p_value_Cm))
+
+```
+
+**Conclusion:**
+
+-   Since the p-value is \< 0.001, the correlation between city-mpg and price is statistically significant, and the coefficient of \~ -0.687 shows that the relationship is negative and moderately strong.
+
+**9.Highway_mpg vs Price**
+
+```{r}
+# Calculate the Pearson correlation coefficient and p-value
+result_Hm <- cor.test(autoMobile$highway_mpg, autoMobile$price, method = "pearson")
+
+# Extract the correlation coefficient and p-value
+pearson_coef_Hm <- result_Hm$estimate
+p_value_Hm <- result_Hm$p.value
+
+# Print the results
+print(paste("The Pearson Correlation Coefficient is", pearson_coef_Hm, "with a P-value of P =", p_value_Hm))
+
+```
+
+**Conclusion:**
+
+-   Since the p-value is \< 0.001, the correlation between highway-mpg and price is statistically significant, and the coefficient of \~ -0.705 shows that the relationship is negative and moderately strong.
+
+### **ANOVA**
+
+#### ANOVA: Analysis of Variance
+
+The Analysis of Variance (ANOVA) is a statistical method used to test whether there are significant differences between the means of two or more groups. ANOVA returns two parameters:
+
+1.  **F-test score:**
+
+    ANOVA assumes the means of all groups are the same, calculates how much the actual means deviate from the assumption, and reports it as the F-test score.
+
+    A larger score means there is a larger difference between the means.
+
+2.  **P-value:**\
+    P-value tells how statistically significant is our calculated score value.
+
+-   If our price variable is strongly correlated with the variable we are analyzing, expect ANOVA to return a sizeable F-test score and a small p-value.
+
+**Drive Wheels**
+
+-   Since ANOVA analyzes the difference between different groups of the same variable, the groupby function will come in handy. Because the ANOVA algorithm averages the data automatically, we do not need to take the average before hand.
+
+-   Let's see if different types **'drive-wheels'** impact **'price'**, we group the data.
+
+```{r}
+
+df_gptest <- autoMobile[,c("drive_wheels","price")]
+head(df_gptest)
+
+grouped_test2 <- df_gptest %>%
+  select("drive_wheels", "price") %>%
+  group_by(drive_wheels)
+
+head(grouped_test2)
+
+```
+
+```{r}
+# Extract the 'price' column of the '4wd' group
+price_of_4wd_cars <- grouped_test2 %>%
+  filter(drive_wheels == "4wd") %>%
+  select(price)
+
+price_of_4wd_cars
+
+```
+
+ChiSquared Test Use to check the relation between two categorical variables.
+
+```{r}
+
+test1 <- chisq.test(make, fuel_type)
+test1
+
+```
+
+With a p-value of 0.000495, which is smaller than the typical significance level of 0.05, we have enough evidence to reject the null hypothesis. The null hypothesis states that there is no association between the variables make and fuel_type. Therefore, based on the chi-squared test results, we can conclude that there is a significant association between the make and fuel_type variables.
+
+```{r}
+
+test2 <- chisq.test(engine_location, drive_wheels)
+test2
+
+```
+
+With a p-value of 0.07548, which is greater than the typical significance level of 0.05, we do not have enough evidence to reject the null hypothesis. The null hypothesis states that there is no association between the variables engine_location and drive_wheels. Therefore, based on the chi-squared test results, we cannot conclude that there is a significant association between the engine_location and drive_wheels variables.
+
+```{r}
+
+test3 <- chisq.test(engine_type, aspiration)
+test3
+
+```
+
+With a p-value of 0.1019, which is greater than the typical significance level of 0.05, we do not have enough evidence to reject the null hypothesis. The null hypothesis states that there is no association between the variables engine_type and aspiration Therefore, based on the chi-squared test results, we cannot conclude that there is a significant association between the engine_type and aspiration variables.
+
+#### **Conclusion:**
+
+**Important Variables**
+
+-   We now have a better idea of what our data looks like and which variables are important to take into account when predicting the car price. We have narrowed it down to the following variables:
+
+**A.Continuous numerical variables:**
+
+-   length
+
+-   width
+
+-   curb_weight
+
+-   engine_size
+
+-   horsepower
+
+-   city_mpg
+
+-   highway_mpg
+
+-   wheel_base
+
+-   bore
+
+**B.Categorical variables:**
+
+-   drive-wheels
+
+MODEL BUILDING
+
+As we now move into building models to our analysis, feeding the model with variables that meaningfully affect our target variable will improve our model's prediction performance.
+
+### Linear Regression and Multiple Linear Regression
+
+#### Linear Regression
+
+One example of a data model that we will be using is
+
+[***a. Simple Linear regression:***]{.underline}
+
+Simple linear regression is a method to help us understand the relationship between two variables:
+
+**i.**The Predictor/independent variable(X)
+
+**ii.**The response/dependent variable (that we want to predict)(Y)
+
+The result of Linear Regression is a linear function that predicts the response (dependent) variable as a function of the predictor (independent) variable.
+
+**Linear function: Y(hat) = a + b\*X**
+
+-   a = refers to the intercept of the regression line.
+-   b = refers to the slope of the regression line.
+
+[***b.Multiple Linear Regression***]{.underline}
+
+This method is used to explain the relationship between one continuous response (dependent) variable and two or more predictor (independent) variables. Most of the real-world regression models involve multiple predictors.
+
+Y : Response Variable
+
+X1: Predictor Variable 1
+
+X2: Predictor Variable 2
+
+X3: Predictor Variable 3
+
+X4: Predictor Variable 4
+
+a : intercept
+
+b1: coefficients of Variable 1
+
+b2: coefficients of Variable 2
+
+b3: coefficients of Variable 3
+
+b4: coefficients of Variable 4
+
+**Y(hat) = a + b1.X1 + b2.X2 + b3.X3 + b4.X4**
+
+-   From the previous section we know that other good predictors of price could be: length, width, curb_weight, engine_size, horsepower, city_mpg, highway_mpg, wheel_base, bore, drive_wheels.
+
+Let's develop a model using these variables as the predictor variables.
+
+FULL MODEL
+
+```{r}
+
+F_model <- lm(price ~ ., data = autoMobile)
+
+summary(F_model)
+
+```
+
+-   Considering the NA values we reduce some variables.
+
+Then,
+
+```{r}
+
+Full_Model <- lm(price ~ peak_rpm + bore + engine_size + curb_weight + engine_location + length + height + width + wheel_base + engine_location + body_style + aspiration + fuel_type + symboling + normalized_losses,
+                    data = autoMobile)
+
+summary(Full_Model)
+
+```
+
+The overall model shows a good fit with an adjusted R-squared of 0.8735, indicating that around 87.35% of the variation in the price can be explained by the included predictor variables.
+
+#### Multicolinearity
+
+**by the plot**
+
+```{r}
+
+#par(mfrow = c(2,2))
+plot(Full_Model)
+
+```
+
+1.  Residuals vs fitted and residuals A random scatter of points around the horizontal line at 0 suggests that the model has met the assumption. If there's a pattern or funnel shape, it indicates potential heteroscedasticity. **Heteroscedasticity**
+
+2.  Q-Q residuals The points should closely follow the straight line, suggesting that the residuals are approximately normally distributed. Departure from the straight line indicates non-normality of residuals. **Non-normality**
+
+3.  Cook's Distance Plot: This plot identifies influential observations that may significantly affect the model. Large Cook's distance values suggest potential outliers or observations that significantly impact the regression coefficients. **There are some extreme values**
+
+4.  Influence Plot: This plot helps identify influential observations in terms of their leverage and residuals. Observations outside the dashed lines have high leverage and may affect the regression coefficients. **No leverage points**
+
+To address issues like heteroscedasticity, non-normality, and extreme values in our regression analysis, it is essential to consider building a reduced model. A reduced model involves selecting a subset of the most relevant and least collinear predictor variables. By doing so, we can simplify the model and potentially improve its stability and interpretability. The reduced model can help mitigate the impact of outliers and non-normality by focusing on the most influential predictors. Additionally, it may reduce multicollinearity, leading to more reliable coefficient estimates. Overall, a reduced model provides a practical approach to tackle these challenges and enhance the quality of our regression analysis.
+
+REDUCED MODEL
+
+```{r}
+Reduced_Model <- lm(price ~ peak_rpm + engine_size + curb_weight + engine_location + width + engine_location,
+                    data = autoMobile)
+
+summary(Reduced_Model)
+
+```
+
+-   The overall model shows a good fit with an adjusted R-squared of 0.8618, indicating that around 86.18% of the variation in the price can be explained by the included predictor variables.
+
+#### Multiple Linear Function
+
+**Price = -0.0006810 + {(0.08039)x width} + {(5.283)x curb_weight} + {(0.01019)x engine_size} + {(0.0001372)x engine_location} + {(1.327)x peak_rpm}**
+
+#### Model Evaluation using Visualization
+
+-   To evaluate our models and to choose the best one? One way to do this is by using visualization.
+
+-   The variable "highway_mpg" has a stronger correlation with "price", it is approximate -0.72009010 compared to "peak_rpm" which is approximate -0.1719161
+
+**Residual Plot**
+
+-   A good way to visualize the variance of the data is to use a residual plot.
+
+**Residual:**
+
+-   The difference between the observed value (y) and the predicted value. It is the distance from the data point to the fitted regression line.
+
+-   Y(hat) is called the residual Residual plot:
+
+    It is a graph that shows the residuals on the vertical y-axis and the independent variable on the horizontal x-axis. We should always look at the spread of the residuals.
+
+If the points in a residual plot are randomly spread out around the x-axis, then a linear model is appropriate for the data ( Randomly spread out residuals means that the variance is constant, and thus the linear model is a good fit for this data )
+
+-   We can see from this residual plot - residuals are not randomly spread around the x-axis,thus a non-linear model is more appropriate for this data.
+
+**Decision Making:**
+
+-   Determining a Good Model Fit \*Model with the higher R-squared value is a better fit for the data.
+
+-   Model with the smallest MSE value is a better fit for the data.
+
+#### Multiple Linear Regression
+
+Visualizing a model for Multiple Linear Regression Distribution plot : Compare the distribution of the fitted values that result from the model and distribution of the actual values.
+
+The following assumptions should be satisfied by a Linear Regression model. i. x and y should have a linear relationship. - The 1st assumption should be checked before fitting the regression model. - Identify the independent variable and the dependent variable - For a simple linear regression, R is the square of the Pearson correlation coefficient.It ranges from 0 to 1. A large value of R indicates a better fit.
+
+ii. Residuals are normally distributed.
+
+-   Residuals are normally distributed.
+-   using shapiro.Test If p \< 0.05 we can say that residuals do not follow a normal distribution.
+
+iii. Residuals have a zero mean.
+
+-   significant value is 0. randomly distributed.
+
+iv. Residuals have a constant variance.
+
+-   randomly distributed plot means the constant variance
+
+v.  Residuals are independently distributed.
+
+-   randomly distributed plot means the independent distributed
+
+residuals
+
+```{r}
+residuals_RM <- Reduced_Model$residuals
+
+residuals_RM
+
+
+```
+
+2nd Assumption
+
+```{r}
+shapiro.test(residuals_RM)
+
+```
+
+the test statistic (W) is 0.95179. The associated p-value is 4.094e-06, which is extremely small.
+
+The null hypothesis for the Shapiro-Wilk test assumes that the residuals are normally distributed. In this case, since the p-value is significantly smaller than the conventional significance level of 0.05, there is strong evidence to reject the null hypothesis. This suggests that the residuals are not normally distributed
+
+3rd Assumption
+
+```{r}
+mean(residuals_RM)
+```
+
+-   mean residuals nearly goes to zero. therefore we can take this as mean val = 0.
+
+4th Assumption
+
+```{r}
+predictor_RM <- Reduced_Model$fitted.values
+
+head(predictor_RM)
+
+```
+
+```{r}
+
+plot(predictor_RM/1000, residuals_RM/1000, main = "Residuals Vs. Fitted values", xlab = "Fitted values", ylab = "Residuals")
+abline(h=0)
+
+```
+
+A random scatter plot without any discernible pattern indicates that the model captures the underlying variability and randomness of the data. It suggests that the linear regression model is a reasonable fit for the data and that the assumptions of linearity and constant variance of residuals are met.
+
+5th Assumption
+
+```{r}
+#Residuals vs Order
+plot(residuals_RM/1000, main = "Residuals Vs. Order", xlab = "Order", ylab = "Residuals")
+abline(h=0)
+
+```
+
+Not randomly distributed, residuals are not independently distributed
+
+**Prediction Accuracy**
+
+MAE
+
+```{r}
+mae = mean(abs(residuals_RM))
+mae
+```
+
+These value should be close to zero. Then the difference between the of predictive value and actual value nearly zero.
+
+RMSE
+
+```{r}
+rmse = sqrt(mean(residuals_RM^2))
+rmse
+```
+
+These value should be close to zero. Then the difference between the of predictive value and actual value nearly zero.
+
+```         
+```
+
+### **CONCLUSION**
+
+-   Comparing these, we conclude that the Reduced MLR model is the best model to be able to predict price from our data set. This result makes sense.

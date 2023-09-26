@@ -1,0 +1,3 @@
+"0",""
+"0","lm_fit <- lm(price ~ stroke, data = autoMobile)"
+"0","abline(lm_fit, col = ""blue"")"

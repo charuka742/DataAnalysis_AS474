@@ -1,0 +1,4 @@
+"0",""
+"0","lm_fit <- lm(price ~ highway_mpg, data = autoMobile)"
+"0","abline(lm_fit, col = ""red"")"
+"0",""

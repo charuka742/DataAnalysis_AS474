@@ -1,0 +1,3 @@
+"0","aspiration_Tbl <- table(autoMobile$aspiration)"
+"0","barplot(aspiration_Tbl, main = ""Aspiration"", xlab = ""type"", ylab = ""Count"",col = cm.colors(2),  border = ""black"")"
+"0",""

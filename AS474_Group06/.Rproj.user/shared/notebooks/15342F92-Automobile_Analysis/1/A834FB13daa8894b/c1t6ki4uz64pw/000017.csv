@@ -1,0 +1,4 @@
+"0",""
+"0","chosen_lambda <- -0.35"
+"0",""
+"0","transformed_response <- boxcox(lm_fit, lambda = chosen_lambda)$y  # Replace 'lm_fit' and 'chosen_lambda' accordingly"

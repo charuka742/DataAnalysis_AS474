@@ -1,0 +1,6 @@
+"0",""
+"0","ggplot(data = autoMobile, aes(x = body_style, y = price)) +"
+"0","  geom_boxplot(fill = rainbow(5)) +"
+"0","  xlab(""Body Style"") +"
+"0","  ylab(""Price"")"
+"0",""

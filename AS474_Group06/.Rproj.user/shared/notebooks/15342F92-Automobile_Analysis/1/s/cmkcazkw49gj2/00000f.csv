@@ -1,0 +1,2 @@
+"0",""
+"0","plot(predictor_RM/1000, residuals_RM/1000, main = ""Residuals Vs. Fitted values"", xlab = ""Fitted values"", ylab = ""Residuals"")"

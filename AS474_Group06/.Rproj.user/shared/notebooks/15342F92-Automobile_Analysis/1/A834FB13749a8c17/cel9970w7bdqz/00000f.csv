@@ -1,0 +1,7 @@
+"0",""
+"0","ggplot(data = autoMobile, aes(x = stroke, y = price)) +"
+"0","  geom_point(color = ""red"") +"
+"0","  geom_smooth(method = ""lm"", formula = y ~ x, se = FALSE, color = ""green"") +"
+"0","  xlab(""Stroke"") +"
+"0","  ylab(""Price"")"
+"0",""

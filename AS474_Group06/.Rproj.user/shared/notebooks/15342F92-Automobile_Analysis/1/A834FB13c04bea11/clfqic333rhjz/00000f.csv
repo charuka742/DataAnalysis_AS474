@@ -1,0 +1,6 @@
+"0","ggplot(autoMobile, aes(x = peak_rpm, y = price)) +"
+"0","  geom_point() +"
+"0","  geom_smooth(method = ""lm"", se = FALSE) +"
+"0","  ylim(0,max(price)) +"
+"0","  geom_smooth(method = ""lm"", se = FALSE, aes(colour = ""Residuals""))"
+"0",""

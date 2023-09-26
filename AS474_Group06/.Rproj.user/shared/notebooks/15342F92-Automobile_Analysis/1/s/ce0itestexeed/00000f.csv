@@ -1,0 +1,6 @@
+"0","# Extract the 'price' column of the '4wd' group"
+"0","price_of_4wd_cars <- grouped_test2 %>%"
+"0","  filter(drive_wheels == ""4wd"") %>%"
+"0","  select(price)"
+"2","Adding missing grouping variables: `drive_wheels`"
+"0","price_of_4wd_cars"

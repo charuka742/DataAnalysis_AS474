@@ -1,0 +1,2 @@
+"0","hist(curb_weight,main= ""Histogram for curb_weight"",xlab= ""Curb Weight"", ylab= ""Frequency"", col= rainbow(1),border= ""black"")"
+"0",""

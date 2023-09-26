@@ -1,0 +1,6 @@
+"0",""
+"0","grouped_test2 <- df_gptest %>%"
+"0","  select(""drive_wheels"", ""price"") %>%"
+"0","  group_by(drive_wheels)"
+"0",""
+"0","head(grouped_test2)"

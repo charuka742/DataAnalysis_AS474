@@ -1,0 +1,3 @@
+"0","stroke_num <- as.numeric(autoMobile$stroke)"
+"0","hist(stroke_num, main= ""Histogram for stroke"",xlab= ""stroke"", ylab= ""Frequency"", col= ""green"",border= ""black"")"
+"0",""

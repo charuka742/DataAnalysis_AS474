@@ -1,0 +1,3 @@
+"0","horsepower_num <- as.numeric(autoMobile$horsepower)"
+"0","hist(horsepower_num, main= ""Histogram for Horsepower"",xlab= ""horsepower"", ylab= ""Frequency"", col= ""purple"",border= ""black"")"
+"0",""

@@ -1,0 +1,5 @@
+"0","ggplot(data = autoMobile, aes(x = peak_rpm, y = price)) +"
+"0","  geom_point(color = ""green"") +"
+"0","  geom_smooth(method = ""lm"", formula = y ~ x, se = FALSE, color = ""blue"") +"
+"0","  xlab(""PEAK RPM"") +"
+"0","  ylab(""Price"")"

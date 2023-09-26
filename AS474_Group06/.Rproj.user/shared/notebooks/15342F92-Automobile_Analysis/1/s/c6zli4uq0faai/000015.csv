@@ -1,0 +1,1 @@
+"0","boxplot(price_num, main= ""Boxplot for price"", xlab= ""price"", col= ""darkblue"", horizontal = TRUE)"

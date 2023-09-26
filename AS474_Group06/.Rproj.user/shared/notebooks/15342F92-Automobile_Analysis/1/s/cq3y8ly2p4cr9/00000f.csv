@@ -1,0 +1,2 @@
+"0","#Residuals vs Order"
+"0","plot(residuals_RM/1000, main = ""Residuals Vs. Order"", xlab = ""Order"", ylab = ""Residuals"")"

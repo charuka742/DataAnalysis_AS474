@@ -1,0 +1,2 @@
+"0","plot(autoMobile$peak_rpm, autoMobile$price, main = ""PEAK RPM vs Price"","
+"0","     xlab = ""PEAK RPM"", ylab = ""Price"", col = ""red"")"

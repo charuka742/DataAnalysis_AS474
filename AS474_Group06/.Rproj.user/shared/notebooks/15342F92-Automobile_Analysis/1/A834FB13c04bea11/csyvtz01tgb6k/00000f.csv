@@ -1,0 +1,3 @@
+"0",""
+"0","table_driveWheels_df <- as.data.frame(table(autoMobile$drive_wheels))"
+"0","head(table_driveWheels_df)"

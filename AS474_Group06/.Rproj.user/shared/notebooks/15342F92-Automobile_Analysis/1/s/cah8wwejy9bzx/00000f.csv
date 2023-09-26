@@ -1,0 +1,1 @@
+"0","hist(height, main= ""Histogram for width"",xlab= ""width"", ylab= ""Frequency"", col= ""orange"",border= ""black"")"

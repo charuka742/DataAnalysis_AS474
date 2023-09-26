@@ -1,0 +1,3 @@
+"0","num_of_doors_Tbl <- table(autoMobile$num_of_doors)"
+"0","barplot(num_of_doors_Tbl, main = ""Number Of Doors"", xlab = ""No_Of_Doors"", ylab = ""Count"", col = heat.colors(2), border = ""black"")"
+"0",""

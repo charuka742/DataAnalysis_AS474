@@ -1,0 +1,23 @@
+"0",""
+"0","ggplot(data = autoMobile, aes(x = engine_location, y = price)) +"
+"0","  geom_boxplot(fill = cm.colors(2)) +"
+"0","  xlab(""engine location"") +"
+"0","  ylab(""Price"")"
+"1","[1m[33mError[39m in `geom_boxplot()`:[22m
+[38;5;232m[33m![38;5;232m Problem while setting up geom aesthetics.
+[36mℹ[38;5;232m Error occurred in the 1st layer.[39m
+[1mCaused by error in `check_aesthetics()`:[22m
+[38;5;232m[33m![38;5;232m Aesthetics must be either length 1 or the same as the data (1)
+[31m✖[38;5;232m Fix the following mappings: `fill`[39m
+Backtrace:
+[90m  1. [39m[1mbase[22m (local) `<fn>`(x)
+[90m  2. [39mggplot2:::print.ggplot(x)
+[90m  4. [39mggplot2:::ggplot_build.ggplot(x)
+[90m  5. [39mggplot2:::by_layer(...)
+[90m 12. [39mggplot2 (local) f(l = layers[[i]], d = data[[i]])
+[90m 13. [39ml$compute_geom_2(d)
+[90m 14. [39mggplot2 (local) compute_geom_2(..., self = self)
+[90m 15. [39mself$geom$use_defaults(data, self$aes_params, modifiers)
+[90m 16. [39mggplot2 (local) use_defaults(..., self = self)
+[90m 17. [39m[1m[94mggplot2:::check_aesthetics([39m[22mparams[aes_params], nrow(data)[1m[94m)[39m[22m
+"

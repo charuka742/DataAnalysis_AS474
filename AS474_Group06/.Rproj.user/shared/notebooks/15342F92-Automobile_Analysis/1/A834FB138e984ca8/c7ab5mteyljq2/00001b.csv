@@ -1,0 +1,138 @@
+"0","attach(autoMobile)"
+"2","The following objects are masked from autoMobile (pos = 3):
+
+    aspiration, body_style, bore, city_mpg, compression_ratio, curb_weight, drive_wheels,
+    engine_location, engine_size, engine_type, fuel_system, fuel_type, height, highway_mpg,
+    horsepower, length, make, normalized_losses, num_of_cylinders, num_of_doors, peak_rpm, price,
+    stroke, symboling, wheel_base, width
+
+"
+"2","The following objects are masked from autoMobile (pos = 4):
+
+    aspiration, body_style, bore, city_mpg, compression_ratio, curb_weight, drive_wheels,
+    engine_location, engine_size, engine_type, fuel_system, fuel_type, height, highway_mpg,
+    horsepower, length, make, normalized_losses, num_of_cylinders, num_of_doors, peak_rpm, price,
+    stroke, symboling, wheel_base, width
+
+"
+"2","The following objects are masked from autoMobile (pos = 5):
+
+    aspiration, body_style, bore, city_mpg, compression_ratio, curb_weight, drive_wheels,
+    engine_location, engine_size, engine_type, fuel_system, fuel_type, height, highway_mpg,
+    horsepower, length, make, normalized_losses, num_of_cylinders, num_of_doors, peak_rpm, price,
+    stroke, symboling, wheel_base, width
+
+"
+"2","The following objects are masked from autoMobile (pos = 6):
+
+    aspiration, body_style, bore, city_mpg, compression_ratio, curb_weight, drive_wheels,
+    engine_location, engine_size, engine_type, fuel_system, fuel_type, height, highway_mpg,
+    horsepower, length, make, normalized_losses, num_of_cylinders, num_of_doors, peak_rpm, price,
+    stroke, symboling, wheel_base, width
+
+"
+"2","The following objects are masked from autoMobile (pos = 7):
+
+    aspiration, body_style, bore, city_mpg, compression_ratio, curb_weight, drive_wheels,
+    engine_location, engine_size, engine_type, fuel_system, fuel_type, height, highway_mpg,
+    horsepower, length, make, normalized_losses, num_of_cylinders, num_of_doors, peak_rpm, price,
+    stroke, symboling, wheel_base, width
+
+"
+"2","The following objects are masked from autoMobile (pos = 8):
+
+    aspiration, body_style, bore, city_mpg, compression_ratio, curb_weight, drive_wheels,
+    engine_location, engine_size, engine_type, fuel_system, fuel_type, height, highway_mpg,
+    horsepower, length, make, normalized_losses, num_of_cylinders, num_of_doors, peak_rpm, price,
+    stroke, symboling, wheel_base, width
+
+"
+"2","The following objects are masked from autoMobile (pos = 9):
+
+    aspiration, body_style, bore, city_mpg, compression_ratio, curb_weight, drive_wheels,
+    engine_location, engine_size, engine_type, fuel_system, fuel_type, height, highway_mpg,
+    horsepower, length, make, normalized_losses, num_of_cylinders, num_of_doors, peak_rpm, price,
+    stroke, symboling, wheel_base, width
+
+"
+"2","The following objects are masked from autoMobile (pos = 10):
+
+    aspiration, body_style, bore, city_mpg, compression_ratio, curb_weight, drive_wheels,
+    engine_location, engine_size, engine_type, fuel_system, fuel_type, height, highway_mpg,
+    horsepower, length, make, normalized_losses, num_of_cylinders, num_of_doors, peak_rpm, price,
+    stroke, symboling, wheel_base, width
+
+"
+"2","The following objects are masked from grouped_test2:
+
+    drive_wheels, price
+
+"
+"2","The following objects are masked from autoMobile (pos = 13):
+
+    aspiration, body_style, bore, city_mpg, compression_ratio, curb_weight, drive_wheels,
+    engine_location, engine_size, engine_type, fuel_system, fuel_type, height, highway_mpg,
+    horsepower, length, make, normalized_losses, num_of_cylinders, num_of_doors, peak_rpm, price,
+    stroke, symboling, wheel_base, width
+
+"
+"2","The following objects are masked from autoMobile (pos = 14):
+
+    aspiration, body_style, bore, city_mpg, compression_ratio, curb_weight, drive_wheels,
+    engine_location, engine_size, engine_type, fuel_system, fuel_type, height, highway_mpg,
+    horsepower, length, make, normalized_losses, num_of_cylinders, num_of_doors, peak_rpm, price,
+    stroke, symboling, wheel_base, width
+
+"
+"2","The following objects are masked from autoMobile (pos = 15):
+
+    aspiration, body_style, bore, city_mpg, compression_ratio, curb_weight, drive_wheels,
+    engine_location, engine_size, engine_type, fuel_system, fuel_type, height, highway_mpg,
+    horsepower, length, make, normalized_losses, num_of_cylinders, num_of_doors, peak_rpm, price,
+    stroke, symboling, wheel_base, width
+
+"
+"2","The following objects are masked from autoMobile (pos = 16):
+
+    aspiration, body_style, bore, city_mpg, compression_ratio, curb_weight, drive_wheels,
+    engine_location, engine_size, engine_type, fuel_system, fuel_type, height, highway_mpg,
+    horsepower, length, make, normalized_losses, num_of_cylinders, num_of_doors, peak_rpm, price,
+    stroke, symboling, wheel_base, width
+
+"
+"2","The following objects are masked from autoMobile (pos = 17):
+
+    aspiration, body_style, bore, city_mpg, compression_ratio, curb_weight, drive_wheels,
+    engine_location, engine_size, engine_type, fuel_system, fuel_type, height, highway_mpg,
+    horsepower, length, make, normalized_losses, num_of_cylinders, num_of_doors, peak_rpm, price,
+    stroke, symboling, wheel_base, width
+
+"
+"2","The following objects are masked from autoMobile (pos = 18):
+
+    aspiration, body_style, bore, city_mpg, compression_ratio, curb_weight, drive_wheels,
+    engine_location, engine_size, engine_type, fuel_system, fuel_type, height, highway_mpg,
+    horsepower, length, make, normalized_losses, num_of_cylinders, num_of_doors, peak_rpm, price,
+    stroke, symboling, wheel_base, width
+
+"
+"2","The following objects are masked from autoMobile (pos = 19):
+
+    aspiration, body_style, bore, city_mpg, compression_ratio, curb_weight, drive_wheels,
+    engine_location, engine_size, engine_type, fuel_system, fuel_type, height, highway_mpg,
+    horsepower, length, make, normalized_losses, num_of_cylinders, num_of_doors, peak_rpm, price,
+    stroke, symboling, wheel_base, width
+
+"
+"2","The following objects are masked from autoMobile (pos = 20):
+
+    aspiration, body_style, bore, city_mpg, compression_ratio, curb_weight, drive_wheels,
+    engine_location, engine_size, engine_type, fuel_system, fuel_type, height, highway_mpg,
+    horsepower, length, make, normalized_losses, num_of_cylinders, num_of_doors, peak_rpm, price,
+    stroke, symboling, wheel_base, width
+
+"
+"0","bins <- seq(min(autoMobile$horsepower), max(autoMobile$horsepower), length.out = 4)"
+"2","Error in seq.default(min(autoMobile$horsepower), max(autoMobile$horsepower),  : 
+  'from' must be a finite number
+"

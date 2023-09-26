@@ -1,0 +1,13 @@
+"0","attach(autoMobile)"
+"2","The following objects are masked from autoMobile (pos = 3):
+
+    aspiration, body_style, bore, city_mpg, compression_ratio, curb_weight, drive_wheels, engine_location, engine_size, engine_type,
+    fuel_system, fuel_type, height, highway_mpg, horsepower, length, make, normalized_losses, num_of_cylinders, num_of_doors, peak_rpm,
+    price, stroke, symboling, wheel_base, width
+
+"
+"0","ggplot(data = autoMobile, aes(x = engine_location, y = price)) +"
+"0","  geom_boxplot(fill = cm.colors(1)) +"
+"0","  xlab(""engine location"") +"
+"0","  ylab(""Price"")"
+"0",""

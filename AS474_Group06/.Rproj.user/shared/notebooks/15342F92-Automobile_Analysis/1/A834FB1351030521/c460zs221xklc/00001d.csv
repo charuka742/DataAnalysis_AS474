@@ -1,0 +1,4 @@
+"0","# Extract the 'price' column of the '4wd' group"
+"0","fourwd_prices <- grouped_test2[grouped_test2$drive_wheels == ""4wd"", ""mean_price""]"
+"0",""
+"0","fourwd_prices"

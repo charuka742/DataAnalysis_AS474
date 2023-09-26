@@ -1,0 +1,2 @@
+"0","bore_num <- as.numeric(autoMobile$bore)"
+"0","hist(bore_num, main= ""Histogram for Bore"",xlab= ""bore"", ylab= ""Frequency"", col= ""blue"",border= ""black"")"

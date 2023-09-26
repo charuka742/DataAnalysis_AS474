@@ -1,0 +1,5 @@
+"0",""
+"0","boxplot(price ~ body_style, data = autoMobile, col = rainbow(5),"
+"0","        main = ""Boxplot: Body Style vs Price"","
+"0","        xlab = ""Body Style"", ylab = ""Price"")"
+"0",""

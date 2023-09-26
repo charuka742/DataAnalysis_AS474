@@ -1,0 +1,2 @@
+"0","hist(highway_mpg, main= ""Histogram for highway_mpg"",xlab= ""highway_mpg"", ylab= ""Frequency"", col= ""brown"",border= ""black"")"
+"0",""

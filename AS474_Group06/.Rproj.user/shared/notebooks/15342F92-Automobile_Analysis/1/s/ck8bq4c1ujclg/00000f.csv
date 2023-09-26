@@ -1,0 +1,6 @@
+"0","CorHighway_mpg.P <- cor(autoMobile$highway_mpg, autoMobile$price)"
+"0","CorHighway_mpg.P"
+"1","[1]"
+"1"," -0.7191777"
+"1","
+"

@@ -1,0 +1,7 @@
+"0",""
+"0","ggplot(data = autoMobile, aes(x = highway_mpg, y = price)) +"
+"0","  geom_point(color = ""purple"") +"
+"0","  geom_smooth(method = ""lm"", formula = y ~ x, se = FALSE, color = ""red"") +"
+"0","  xlab(""Highway MPG"") +"
+"0","  ylab(""Price"")"
+"0",""

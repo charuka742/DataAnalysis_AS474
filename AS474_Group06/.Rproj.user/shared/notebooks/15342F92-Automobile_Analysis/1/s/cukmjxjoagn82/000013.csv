@@ -1,0 +1,6 @@
+"0","horsepowerTable <- table(autoMobile[['horsepower']])"
+"0",""
+"0",""
+"0","hist(autoMobile$horsepower, col = topo.colors(length(horsepowerTable)), border = ""black"","
+"0","     xlab = ""Horsepower"", ylab = ""Count"", main = ""Histogram of HORSEPOWER"")"
+"0",""

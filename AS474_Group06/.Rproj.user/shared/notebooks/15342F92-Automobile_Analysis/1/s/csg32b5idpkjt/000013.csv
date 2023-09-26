@@ -1,0 +1,1 @@
+"0","boxplot(wheel_base, main= ""Boxplot for price"", xlab= ""price"", col= ""red"", horizontal = TRUE)"

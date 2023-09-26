@@ -1,0 +1,5 @@
+"0",""
+"0","boxplot(price ~ engine_location, data = autoMobile, col = cm.colors(1),"
+"0","        main = ""Boxplot: Engine Location vs Price"","
+"0","        xlab = ""Engine Location"", ylab = ""Price"")"
+"0",""

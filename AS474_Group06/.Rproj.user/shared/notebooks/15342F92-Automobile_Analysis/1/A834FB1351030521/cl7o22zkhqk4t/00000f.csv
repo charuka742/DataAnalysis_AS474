@@ -1,0 +1,2 @@
+"0","table_engineLoc_df <- as.data.frame(table(autoMobile$engine_location))"
+"0","head(table_engineLoc_df,10)"

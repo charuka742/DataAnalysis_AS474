@@ -1,0 +1,3 @@
+"0","peak_rpm_num <- as.numeric(autoMobile$peak_rpm)"
+"0","hist(peak_rpm_num, main= ""Histogram for Peak Rpm"",xlab= ""peak_rpm"", ylab= ""Frequency"", col= ""yellow"",border= ""black"")"
+"0",""

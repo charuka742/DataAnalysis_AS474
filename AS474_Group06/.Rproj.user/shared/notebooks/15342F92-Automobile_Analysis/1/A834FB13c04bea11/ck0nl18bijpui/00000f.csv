@@ -1,0 +1,5 @@
+"0","ggplot(data = autoMobile, aes(x = drive_wheels, y = price)) +"
+"0","  geom_boxplot(fill = terrain.colors(3)) +"
+"0","  xlab(""Drive Wheels"") +"
+"0","  ylab(""Price"")"
+"0",""

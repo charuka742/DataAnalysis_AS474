@@ -1,0 +1,2 @@
+"0","hist(compression_ratio, main= ""Histogram for Compression Ratio"",xlab= ""compression_ratio"", ylab= ""Frequency"",xlim = c(0, 30), col= ""red"",border= ""black"")"
+"0",""

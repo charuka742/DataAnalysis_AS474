@@ -1,0 +1,6 @@
+"0","CorPeak_rpm.P <- cor(autoMobile$peak_rpm, autoMobile$price)"
+"0","CorPeak_rpm.P"
+"1","[1]"
+"1"," -0.1719161"
+"1","
+"

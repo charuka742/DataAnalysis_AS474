@@ -1,0 +1,12 @@
+"0",""
+"0","# Group by 'drive-wheels' and calculate the mean"
+"0","df_group_one <- df_group_one %>% "
+"0","  group_by(df_group_one$drive_wheels) %>% "
+"0","  summarise_all(mean)"
+"2","Warning: [38;5;232mThere were 6 warnings in `summarise()`.
+The first warning was:[39m
+[38;5;232m[36mℹ[38;5;232m In argument: `drive_wheels = (function (x, ...) ...`.
+[36mℹ[38;5;232m In group 1: `df_group_one$drive_wheels = 4wd`.[39m
+Caused by warning in `mean.default()`:
+[33m![39m argument is not numeric or logical: returning NA
+[38;5;232m[36mℹ[38;5;232m Run ]8;;ide:run:dplyr::last_dplyr_warnings()dplyr::last_dplyr_warnings()]8;; to see the 5 remaining warnings.[39m"

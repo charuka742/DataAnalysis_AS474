@@ -1,0 +1,3 @@
+"0","engine_location_Tbl <- table(autoMobile$engine_location)"
+"0","barplot(engine_location_Tbl, main = ""Engine Location"", xlab = ""Location"", ylab = ""Count"",col = rainbow(2),  border = ""black"")"
+"0",""

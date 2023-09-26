@@ -1,0 +1,3 @@
+"0","boxplot(price ~ drive_wheels, data = autoMobile, col = terrain.colors(3),"
+"0","        main = ""Boxplot: Drive Wheels vs Price"","
+"0","        xlab = ""Drive Wheels"", ylab = ""Price"")"
